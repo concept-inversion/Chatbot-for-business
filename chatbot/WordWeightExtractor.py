@@ -1,7 +1,7 @@
 import re
 
 
-def filter_weights(pre_result, confidence):
+def filter_weights(pre_result, confidence, key_only=False):
     selected_data = list()
     # Received Data Format
     # [topic]: topic=> {word:value}: word=>keyword as topics, value=>relevancy of keyword as topic
@@ -12,7 +12,7 @@ def filter_weights(pre_result, confidence):
                 dix[word] = its_value
         if dix:
             selected_data.append(dix)
-    return selected_data
+    return [topic.keys() for topic in selected_data] if key_only else selected_data
 
 
 def get_weights(stub_data):
