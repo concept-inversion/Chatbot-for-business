@@ -44,6 +44,8 @@ def edits2(word):
     "All edits that are two edits away from `word`."
     return (e2 for e1 in edits1(word) for e2 in edits1(e1))
 
+
+# Synonym will be the combined list of Topic modeled words 'K1, K2, ...' and their synonyms 'S1, S2, ...'
 synonym_r = ['register', 'registration']
 synonym_m = ['merojob', 'merojobs']
 synonym_p = ['password']

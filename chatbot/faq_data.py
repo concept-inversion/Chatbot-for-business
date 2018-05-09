@@ -1,3 +1,4 @@
+# If message['text'] matches with K (Text modeled) or S(Synonyms), then associate the K or S to K-S Parent
 # An example of FAQ data.
 user_input = {
     'register': ["""Registration is easy. Just sign up for a new account by filling in the form completely with your 
