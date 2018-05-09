@@ -1,5 +1,7 @@
 # If message['text'] matches with K (Text modeled) or S(Synonyms), then associate the K or S to K-S Parent
 # An example of FAQ data.
+
+from .utilities import dict_key_tuple
 user_input = {
     'register': ["""Registration is easy. Just sign up for a new account by filling in the form completely with your 
                  full name, a valid email id, mobile number, preferred job category and password. Click “Create my 

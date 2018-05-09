@@ -85,5 +85,4 @@ for each in list_to_synonym[0]:
 list(itertools.chain.from_iterable([[1,2,3], [2,5,8]]))
 no_filter_list = list(itertools.chain.from_iterable(collect))
 filter_list = list(set(no_filter_list))
-print("List wise ===> ", filter_list)
-print("Tuple wise ===>", tuple(filter_list))
+dict_key_tuple = tuple(filter_list)
