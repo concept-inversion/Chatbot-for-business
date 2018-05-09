@@ -35,8 +35,7 @@ Lda = gensim.models.ldamodel.LdaModel
 # Running and Trainign LDA model on the document term matrix.
 ldamodel = Lda(doc_term_matrix, num_topics=3, id2word = dictionary, passes=50)
 
-jumbeled_list = ldamodel.print_topics(num_topics=3, num_words=5)
-print(jumbeled_list)
+jumbled_list = ldamodel.print_topics(num_topics=3, num_words=5)
 
 import re
 
@@ -66,7 +65,7 @@ def get_weights(stub_data):
         all_data.append(dic)
     return all_data
 
-unstructured = get_weights(jumbeled_list)
+unstructured = get_weights(jumbled_list)
 list_to_synonym = filter_weights(unstructured, 0.065, key_only=True)
 # print(structured[0])
 
