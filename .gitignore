@@ -24,7 +24,6 @@ selenium-debug.log
 .tox/
 __pycache__
 
-static/
 media/
 #environment files
 .env
