@@ -8,7 +8,9 @@ constantly==15.1.0
 daphne==1.0.3
 # Django==1.10.6
 Django==2.0
+gensim==3.4.0
 incremental==16.10.1
+lxml==4.2.1
 nltk==3.3
 oauthlib==2.0.1
 packaging==16.8
@@ -20,4 +22,3 @@ Twisted==17.1.0
 txaio==2.6.1
 typing==3.5.3.0
 zope.interface==4.3.3
-lxml==4.2.1

@@ -6,7 +6,7 @@ def words(text):
     return re.findall(r'\w+', text.lower())
 
 
-WORDS = Counter(words(open('/home/akash/projects/github/DjangoBot/chatbot/big.txt').read()))
+WORDS = Counter(words(open('chatbot/big.txt').read()))
 
 
 def P(word, N=sum(WORDS.values())):
