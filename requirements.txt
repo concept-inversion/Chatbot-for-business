@@ -3,10 +3,10 @@ asgiref==1.0.0
 attrs==16.3.0
 autobahn==0.17.2
 Automat==0.5.0
+beautifulsoup4==4.6.0
 channels==1.0.3
 constantly==15.1.0
 daphne==1.0.3
-# Django==1.10.6
 Django==2.0
 gensim==3.4.0
 incremental==16.10.1
