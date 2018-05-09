@@ -1,7 +1,7 @@
 """
-Daily Progress Reporting | May 8th 2018
-1. Built MeroJob Scraper
-2.
+Scraper that runs through the merojob's FAQ and downloads the FAQs for
+Jobseeker and Employer. The parser uses lxml for parsing. The results
+are stored in shelve files.
 """
 
 
