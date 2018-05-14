@@ -1,9 +1,10 @@
 import nltk
+import logging
 from django.shortcuts import render
 
 from .faq_data import user_input
 from .spelling import correction
-
+logging.basicConfig(filename='unknown_responses.log', level=logging.ERROR)
 
 def chat(request):
     context = {}
@@ -38,6 +39,7 @@ def respond_to_websockets(message):
         if response_output:
             return '\n Also, \n'.join(response_output)
         else:
+            logging.error('User Query Not Responded: '+uncorrected)
             return uncorrected + "? I don't know any responses for that. May be you should email to info@merojob.com"
 
     import re
