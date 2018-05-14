@@ -2,7 +2,7 @@ import nltk
 from django.shortcuts import render
 
 from .faq_data import user_input
-from .spelling import correction, synonym_r, synonym_m, synonym_p
+from .spelling import correction
 
 
 def chat(request):
