@@ -1,7 +1,6 @@
-# If message['text'] matches with K (Text modeled) or S(Synonyms), then associate the K or S to K-S Parent
-# An example of FAQ data.
-
 from .utilities import dict_key_tuple
+
+
 user_input = {
     'hi': ["""Hello to you too. Ask stuff about merojob."""],
 
@@ -28,7 +27,7 @@ user_input = {
     'bank': ["""If you are selected for the applied bank vacancy, Real solution or the concerned bank will inform you 
             via email and SMS. You'll also get a tracking code is number which is given automatically after the 
             successful applying procedure. It helps you to track your applications status."""],
-            
+
     'card': ["""Please open the link that you have been provided in the SMS or Email. Insert your username and password,
             after the confirmation of attending the exam, please download the admit card."""]
 }
