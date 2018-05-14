@@ -38,7 +38,7 @@ def respond_to_websockets(message):
         if response_output:
             return '\n Also, \n'.join(response_output)
         else:
-            return uncorrected + "? I don't know any responses for that. May be you should try something else?"
+            return uncorrected + "? I don't know any responses for that. May be you should email to info@merojob.com"
 
     import re
     word_selector = re.compile(r'\w+')
