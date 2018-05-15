@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Failed User Responses</title>
+</head>
+<body>
+
+{% if context_data %}
+    <table border="1">
+        <tr>
+            <td>ID</td>
+            <td>Username</td>
+            <td>Query</td>
+            <td>TimeStamp</td>
+        </tr>
+        {% for data in context_data%}
+            <tr>
+                <td>{{data.id}}</td>
+                <td>{{data.username}}</td>
+                <td>{{data.query}}</td>
+                <td>{{data.timestamp}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+</body>
+</html>
