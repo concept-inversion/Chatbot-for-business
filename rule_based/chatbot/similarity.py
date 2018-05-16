@@ -31,7 +31,6 @@ def get_best_synset_pair(word_1, word_2):
     Choose the pair with highest path similarity among all pairs.
     Mimics pattern-seeking behavior of humans.
     """
-    max_sim = -1.0
     synsets_1 = wn.synsets(word_1)
     synsets_2 = wn.synsets(word_2)
     if len(synsets_1) == 0 or len(synsets_2) == 0:
@@ -42,7 +41,7 @@ def get_best_synset_pair(word_1, word_2):
         for synset_1 in synsets_1:
             for synset_2 in synsets_2:
                 sim = wn.path_similarity(synset_1, synset_2)
-                if sim if sim is not None else -2.0> max_sim:
+                if sim if sim is not None else -2.0 > max_sim:
                     max_sim = sim
                     best_pair = synset_1, synset_2
         return best_pair

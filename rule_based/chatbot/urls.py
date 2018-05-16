@@ -18,13 +18,15 @@ from django.contrib import admin
 from .views import chat
 from .views import show_user_queries
 from .views import LogView
+from .views import editable_dashboard
 
 
 urlpatterns = [
     url(r'^chat/$', chat, name='chat'),
     url(r'^admin/', admin.site.urls),
     url(r'^api/dashboard/', show_user_queries, name='display'),
-    url(r'^dashboard/', LogView.as_view(), name='bdisplay'),
+    # url(r'^dashboard/', LogView.as_view(), name='bdisplay'),
+    url(r'^dashboard/', editable_dashboard, name='bdisplay'),
 ]
 
 

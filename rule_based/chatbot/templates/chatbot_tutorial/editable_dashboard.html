@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Failed Responses</title>
+</head>
+<body>
+<table border="1">
+{% for each_dictionary in lists%}
+    <tr>
+        {% for v in each_dictionary.values %}
+            <td>{{v}}</td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>

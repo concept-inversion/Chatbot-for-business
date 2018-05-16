@@ -13,14 +13,25 @@ class LogQuery:
                     "id INTEGER PRIMARY KEY," \
                     "username VARCHAR(100),"\
                     "query VARCHAR(1000),"\
+                    "probable_question varchar(255),"\
+                    "attempted_response varchar(255),"\
+                    "semantic_similarity float,"\
                     "t_stamp CURRENT_TIMESTAMP)"
         self.cursor.execute(statement)
         self.connection.commit()
 
-    def insert_data(self, user_query):
+    def insert_data(self, user_query, probable_question, attempted_response, semantic_similarity):
+        # print("""user_query: {}
+        #     probable_question: {}
+        #     attempted_response: {}
+        #     semantic_similarity{}""".
+        #     format(user_query, probable_question, attempted_response, semantic_similarity))
+
         statement = r"INSERT INTO UserLog" \
-                     "(username, query, t_stamp)" \
-                     "VALUES ('{}','{}',CURRENT_TIMESTAMP)".format(self.username, user_query)
+                     "(username, query,probable_question, attempted_response, semantic_similarity, t_stamp)" \
+                     "VALUES ('{}','{}','{}','{}','{}',CURRENT_TIMESTAMP)".format(self.username, user_query, probable_question,
+                                                                   attempted_response, semantic_similarity)
+        # print(statement)
         self.cursor.execute(statement)
         self.connection.commit()
 

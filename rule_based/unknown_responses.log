@@ -1,0 +1,12 @@
+INFO:daphne.server:Using busy-loop synchronous mode on channel layer
+INFO:daphne.server:Listening on endpoint tcp:port=8000:interface=127.0.0.1
+WARNING:root:User Query Not Responded: What is the height of Mount Everest?
+WARNING:root:User Query Not Responded: how do i use this chatbog
+05/14/2018 11:36:57 AM Using busy-loop synchronous mode on channel layer
+05/14/2018 11:36:57 AM Listening on endpoint tcp:port=8000:interface=127.0.0.1
+05/14/2018 11:37:05 AM Using busy-loop synchronous mode on channel layer
+05/14/2018 11:37:05 AM Listening on endpoint tcp:port=8000:interface=127.0.0.1
+05/14/2018 11:37:12 AM User Query Not Responded: ravi adhikari
+05/14/2018 11:37:54 AM Using busy-loop synchronous mode on channel layer
+05/14/2018 11:37:54 AM Listening on endpoint tcp:port=8000:interface=127.0.0.1
+05/14/2018 11:38:04 AM how do i use this chatbot
