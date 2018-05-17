@@ -65,7 +65,7 @@ def respond_to_websockets(message):
         print(user_input)
         result = test_response(user_input)
         if result is None:
-            return user_input + "? I don't know any responses for that. May be you should email to info@merojob.com"
+            return uncorrected + "? I don't know any responses for that. May be you should email to info@merojob.com"
         return result
 
     import re
