@@ -28,3 +28,4 @@ media/
 #environment files
 .env
 venv/
+db.sqlite3
