@@ -60,6 +60,9 @@ def respond_to_websockets(message):
             return uncorrected + "? I don't know any responses for that. May be you should email to info@merojob.com"
 
     def check_similarity(user_input):
+        token_word = nltk.word_tokenize(user_input)
+        user_input = " ".join([correction(word) for word in token_word])
+        print(user_input)
         result = test_response(user_input)
         if result is None:
             return user_input + "? I don't know any responses for that. May be you should email to info@merojob.com"
