@@ -62,6 +62,7 @@ def test_response(user_query):
 def set_all_keys():
     global key_result
     key_result = cur.execute("select DISTINCT question from question").fetchall()
+    return key_result
 
 
 def get_highest_matching_key(user_query):
