@@ -29,3 +29,7 @@ media/
 .env
 venv/
 db.sqlite3
+
+.ipynb_checkpoints
+
+
