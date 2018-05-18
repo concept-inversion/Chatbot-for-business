@@ -1,6 +1,6 @@
 import nltk
 from nltk.stem.wordnet import WordNetLemmatizer
-from fuzzwuzzy import fuzz
+from fuzzywuzzy import fuzz
 
 def select_noun_verbs_base(sentence, list_only=False):                                                                                                                                                 
     t_sentence = nltk.word_tokenize(sentence)                                                                            

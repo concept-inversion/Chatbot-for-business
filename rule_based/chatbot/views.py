@@ -10,6 +10,9 @@ from .pylog import LogQuery
 from django.views .generic import ListView
 from .models import UserQuery
 from .faq_db import test_response
+from .faq_db import set_all_keys
+from .lemmatizer import lemmatize_word
+from .lemmatizer import select_noun_verbs
 
 # FORMAT = '%(asctime)-15s %(message)s'
 # logging.basicConfig(filename='logs/response.log', level=logging.ERROR, format=FORMAT, datefmt='%m/%d/%Y %I:%M:%S %p')
@@ -35,6 +38,7 @@ def respond_to_websockets(message):
         corrected = correction(str(each))
         a.append(corrected)
     user_query = ' '.join(a)
+    # User Input Spelling Correction Completed
 
     def get_multiple_response(key_list):
         user_keys = set(key_list)
@@ -60,18 +64,25 @@ def respond_to_websockets(message):
             return uncorrected + "? I don't know any responses for that. May be you should email to info@merojob.com"
 
     def check_similarity(user_input):
-        token_word = nltk.word_tokenize(user_input)
-        user_input = " ".join([correction(word) for word in token_word])
-        print(user_input)
+        user_input = user_query
+        # Processing Spell Corrected User Input
         result = test_response(user_input)
         if result is None:
             return uncorrected + "? I don't know any responses for that. May be you should email to info@merojob.com"
         return result
 
+    def pos_similarity(user_input):
+        user_input_to_list_after_pos_reduction = select_noun_verbs(user_input, list_only=True)
+        user_input_to_lemma_after_pos_reduction = [lemmatize_word(word) for word in user_input_to_list_after_pos_reduction]
+        all_database_questions_non_pos = set_all_keys()
+        all_database_questions_after_pos = list(select_noun_verbs(line) for line in all_database_questions_non_pos)
+        all_database_questions_after_lemma = select_noun_verbs(lemmatize_word(word) for line in all_database_questions_non_pos)   
+        return None
+    
     import re
     word_selector = re.compile(r'\w+')
-    # result_message['text'] = get_multiple_response(word_selector.findall(message['text']))
-    result_message['text'] = check_similarity(' '.join(word_selector.findall(uncorrected)))
+    result_message['text'] = get_multiple_response(word_selector.findall(message['text']))
+    # result_message['text'] = check_similarity(' '.join(word_selector.findall(uncorrected)))
     return result_message
 
 
