@@ -5,6 +5,7 @@
 # this is very likely due to the differences in the way the algorithm was
 # described in the paper and how I implemented it.
 from __future__ import division
+import time
 import nltk
 from nltk.corpus import wordnet as wn
 from nltk.corpus import brown
@@ -19,6 +20,7 @@ BETA = 0.45
 ETA = 0.4
 PHI = 0.2
 DELTA = 0.85
+# DELTA = 1.0
 
 brown_freqs = dict()
 N = 0
@@ -251,5 +253,9 @@ def similarity(sentence_1, sentence_2, info_content_norm):
     parameter is True or False depending on whether information content
     normalization is desired or not.
     """
-    return DELTA * semantic_similarity(sentence_1, sentence_2, info_content_norm) + \
-           (1.0 - DELTA) * word_order_similarity(sentence_1, sentence_2)
+    t0 = time.process_time()
+#     value =  DELTA * semantic_similarity(sentence_1, sentence_2, info_content_norm) + \
+#            (1.0 - DELTA) * word_order_similarity(sentence_1, sentence_2)
+    value =  semantic_similarity(sentence_1, sentence_2, info_content_norm)
+    t1 = time.process_time()
+    return t1-t0, value
