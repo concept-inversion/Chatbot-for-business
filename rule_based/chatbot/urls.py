@@ -26,7 +26,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/dashboard/', show_user_queries, name='display'),
     # url(r'^dashboard/', LogView.as_view(), name='bdisplay'),
+    url(r'^update/', editable_dashboard, name='bdisplay'),
     url(r'^dashboard/', editable_dashboard, name='bdisplay'),
+
 ]
 
 

@@ -6,13 +6,16 @@
 </head>
 <body>
 <table border="1">
-{% for each_dictionary in lists%}
-    <tr>
-        {% for v in each_dictionary.values %}
-            <td>{{v}}</td>
-        {% endfor %}
-    </tr>
-{% endfor %}
+            {% for each_dictionary in lists%}
+            <form action="/dashboard/" method="POST">
+                <h2>{{each_dictionary.user_query}}</h2>
+                {%csrf_token%}
+                <input type="hidden" name="update_id" value="{{each_dictionary.id}}">
+                <input type="text" name="update_query">
+                <input type="submit" value="Add Result to Database">
+            </form>
+        {% endfor %}        
+        
 </table>
 </body>
 </html>

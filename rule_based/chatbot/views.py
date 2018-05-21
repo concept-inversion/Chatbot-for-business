@@ -16,6 +16,8 @@ from .lemmatizer import select_noun_verbs
 from .lemmatizer import fuzzymatcher
 from .optimizedsimilarity import similarity
 from .faq_db import get_answer_from_database
+import sqlite3
+from .faq_db import conn, cur
 
 # FORMAT = '%(asctime)-15s %(message)s'
 # logging.basicConfig(filename='logs/response.log', level=logging.ERROR, format=FORMAT, datefmt='%m/%d/%Y %I:%M:%S %p')
@@ -91,7 +93,7 @@ def respond_to_websockets(message):
             jquestion = each_question[0]
             fuzz_value = fuzzymatcher(user_input_to_statement,jquestion, partial=False)
             que_value.append((fuzz_value,jquestion,each_question[1]))
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         t_list = sorted(que_value, reverse=True)[:5]
         similarity_list = list()
         for each_question in t_list:
@@ -104,9 +106,11 @@ def respond_to_websockets(message):
         answer_fetched = get_answer_from_database('',id=selected_id)
         if similarity_value < 0.65:
             print('Did not respond as {} for {} due to {} sim value'.format(answer_fetched, ' '.join(user_input), similarity_value))
+            failed_query = ' '.join(user_input)
+            # print(failed_query)
+            cur.execute("INSERT INTO log(user_query) values('{}')".format(failed_query))
+            conn.commit()
             return "I dont know about that. Our representatives will let you know."
-        dbLogger.insert_data(' '.join(user_query), id, id,similarity_value)
-        
         return answer_fetched
         # print('>>>{}\n>{}'.format(user_input, answer_fetched))
     
@@ -128,8 +132,24 @@ class LogView(ListView):
     context_object_name = 'context_data'
     template_name = 'chatbot_tutorial/display.html'
 
+def insert(id, response):
+    que = cur.execute("SELECT distinct user_query from log where id={}".format(id)).fetchone()[0]
+    stmt = "INSERT INTO que2(question, answer, category) values('{}','{}','{}')".format(que, response, 'userDefined')
+    # print(stmt)
+    cur.execute(stmt)
+    conn.commit()
 
 def editable_dashboard(request):
-    all_failed_responses = dbLogger.fetch_data()
-    return render(request, 'chatbot_tutorial/editable_dashboard.html', {'lists': all_failed_responses})
+    if request.method == 'POST':
+        id = request.POST['update_id']
+        response = request.POST['update_query']
+        insert(id, response)
+    user_log = list()
+    statement = "SELECT * FROM log"
+    cur.execute(statement)
+    headers = [desc[0] for desc in cur.description]
+    for row in cur:
+        user_log.append(dict(zip(headers, row)))
+    # all_failed_responses = dbLogger.fetch_data()
+    return render(request, 'chatbot_tutorial/editable_dashboard.html', {'lists': user_log})
 

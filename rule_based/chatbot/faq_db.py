@@ -46,6 +46,8 @@ def generate_stem_statement(stmt):
     corpora = nltk.word_tokenize(stmt)
     return ' '.join([stemmer.stem(word) for word in corpora])
 
+def hybrid_matcher(user_query):
+    pass
 
 def test_response(user_query):
     true_score = get_highest_matching_key(user_query)
@@ -61,7 +63,7 @@ def test_response(user_query):
 
 def set_all_keys():
     global key_result
-    key_result = cur.execute("select DISTINCT question from question").fetchall()
+    key_result = cur.execute("select DISTINCT question,id from que2").fetchall()
     return key_result
 
 
@@ -76,7 +78,9 @@ def get_highest_matching_key(user_query):
     return true_score
 
 
-def get_answer_from_database(selected_question):
+def get_answer_from_database(selected_question,id=None):
+    if id:
+        return cur.execute("SELECT DISTINCT answer from que2 where id='{}'".format(id)).fetchone()[0]
     stmt = "SELECT DISTINCT answer from question where question='{}'".format(selected_question)
     return cur.execute(stmt).fetchone()[0]
 
