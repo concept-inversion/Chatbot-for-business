@@ -13,6 +13,9 @@ from .faq_db import test_response
 from .faq_db import set_all_keys
 from .lemmatizer import lemmatize_word
 from .lemmatizer import select_noun_verbs
+from .lemmatizer import fuzzymatcher
+from .optimizedsimilarity import similarity
+from .faq_db import get_answer_from_database
 
 # FORMAT = '%(asctime)-15s %(message)s'
 # logging.basicConfig(filename='logs/response.log', level=logging.ERROR, format=FORMAT, datefmt='%m/%d/%Y %I:%M:%S %p')
@@ -72,16 +75,45 @@ def respond_to_websockets(message):
         return result
 
     def pos_similarity(user_input):
-        user_input_to_list_after_pos_reduction = select_noun_verbs(user_input, list_only=True)
+        user_input_corrected = ' '.join(correction(word) for word in user_input)
+        user_input_to_list_after_pos_reduction = select_noun_verbs(user_input_corrected, list_only=True)
         user_input_to_lemma_after_pos_reduction = [lemmatize_word(word) for word in user_input_to_list_after_pos_reduction]
+        user_input_to_statement = ' '.join(user_input_to_lemma_after_pos_reduction)
         all_database_questions_non_pos = set_all_keys()
-        all_database_questions_after_pos = list(select_noun_verbs(line) for line in all_database_questions_non_pos)
-        all_database_questions_after_lemma = select_noun_verbs(lemmatize_word(word) for line in all_database_questions_non_pos)   
-        return None
+        # the recieved format is [(question,),...]
+        all_database_questions_after_pos = list((select_noun_verbs(line[0], list_only=True),line[1]) for line in all_database_questions_non_pos)
+        all_database_questions_after_lemma = list()        
+        for line in all_database_questions_after_pos:
+            lemmatized = ' '.join([lemmatize_word(word) for word in line[0]])
+            all_database_questions_after_lemma.append((lemmatized,line[1]))
+        que_value = list()
+        for each_question in all_database_questions_after_lemma:
+            jquestion = each_question[0]
+            fuzz_value = fuzzymatcher(user_input_to_statement,jquestion, partial=False)
+            que_value.append((fuzz_value,jquestion,each_question[1]))
+        import ipdb; ipdb.set_trace()
+        t_list = sorted(que_value, reverse=True)[:5]
+        similarity_list = list()
+        for each_question in t_list:
+            _, quest, question_id = each_question
+            similarity_value = similarity(quest, user_input_to_statement, True)
+            data = (similarity_value, quest, question_id)
+            similarity_list.append(data)
+        similarity_value, _ , selected_id = max(similarity_list)
+        print(similarity_list)
+        answer_fetched = get_answer_from_database('',id=selected_id)
+        if similarity_value < 0.65:
+            print('Did not respond as {} for {} due to {} sim value'.format(answer_fetched, ' '.join(user_input), similarity_value))
+            return "I dont know about that. Our representatives will let you know."
+        dbLogger.insert_data(' '.join(user_query), id, id,similarity_value)
+        
+        return answer_fetched
+        # print('>>>{}\n>{}'.format(user_input, answer_fetched))
     
     import re
     word_selector = re.compile(r'\w+')
-    result_message['text'] = get_multiple_response(word_selector.findall(message['text']))
+    result_message['text'] = pos_similarity(word_selector.findall(message['text']))
+    # result_message['text'] = get_multiple_response(word_selector.findall(message['text']))
     # result_message['text'] = check_similarity(' '.join(word_selector.findall(uncorrected)))
     return result_message
 
